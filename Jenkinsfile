@@ -20,7 +20,7 @@ tools{
       stage("package"){
           steps{
               echo 'packaging'
-              sh ''mvn package -DskipTests'
+              sh 'mvn package -DskipTests'
           }
       }
   }
