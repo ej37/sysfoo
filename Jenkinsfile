@@ -38,6 +38,12 @@ pipeline {
           }
         }
 
+        stage('stage-new-branch') {
+          steps {
+            echo 'this is commited to new branch'
+          }
+        }
+
       }
     }
 
