@@ -1,7 +1,13 @@
 pipeline {
-  agent any
+  agent none
   stages {
     stage('build') {
+      agent {
+        docker {
+          image 'maven:3.9.6-eclipse-temurin-17-alpine'
+        }
+
+      }
       steps {
         echo 'Building'
         sh 'mvn compile'
@@ -9,6 +15,12 @@ pipeline {
     }
 
     stage('test') {
+      agent {
+        docker {
+          image 'maven:3.9.6-eclipse-temurin-17-alpine'
+        }
+
+      }
       steps {
         echo 'testing'
         sh 'mvn clean test'
@@ -16,34 +28,15 @@ pipeline {
     }
 
     stage('package') {
+      agent {
+        docker {
+          image 'maven:3.9.6-eclipse-temurin-17-alpine'
+        }
+
+      }
       steps {
         echo 'packaging'
         sh 'mvn package -DskipTests'
-      }
-    }
-
-    stage('newly-added-stage') {
-      parallel {
-        stage('newly-added-stage') {
-          steps {
-            echo 'hey hey'
-            sleep 3
-          }
-        }
-
-        stage('new-stage-2-parallel') {
-          steps {
-            echo 'see how it goes'
-            sleep 2
-          }
-        }
-
-        stage('stage-new-branch') {
-          steps {
-            echo 'this is commited to new branch'
-          }
-        }
-
       }
     }
 
