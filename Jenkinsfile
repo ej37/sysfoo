@@ -16,31 +16,27 @@ pipeline {
     }
 
     stage('package') {
-      steps {
-        echo 'packaging'
-        sh 'mvn package -DskipTests'
-      }
-    }
-
-    stage('newly-added-stage') {
       parallel {
-        stage('newly-added-stage') {
+        stage('package') {
           steps {
-            echo 'hey hey'
-            sleep 3
+            echo 'packaging'
+            sh 'mvn package -DskipTests'
           }
         }
 
-        stage('new-stage-2-parallel') {
+        stage('Docker B&P') {
           steps {
-            echo 'see how it goes'
-            sleep 2
-          }
-        }
+            script {
+              docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin')
+              {
+                def commitHash = env.GIT_COMMIT.take(7)
+                def dockerImage = docker.build("ej37/sysfoo:${commitHash}", "./")
+                dockerImage.push()
+                dockerImage.push("latest")
+                dockerImage.push("from-jenkins")
+              }
+            }
 
-        stage('stage-new-branch') {
-          steps {
-            echo 'this is commited to new branch'
           }
         }
 
