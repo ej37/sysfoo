@@ -28,12 +28,6 @@ pipeline {
     }
 
     stage('package') {
-      agent {
-        docker {
-          image 'maven:3.9.6-eclipse-temurin-17-alpine'
-        }
-
-      }
       steps {
         echo 'packaging'
         sh 'mvn package -DskipTests'
