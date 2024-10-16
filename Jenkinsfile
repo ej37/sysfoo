@@ -51,6 +51,9 @@ pipeline {
     }
 
     stage('Deploy to dev env') {
+      when {
+            branch 'main'
+          }
       steps {
         script {
           docker compose up -d
