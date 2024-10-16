@@ -1,5 +1,5 @@
 services:
   sysfoo:
-    image: ej37/sysfoo:dev
+    image: ej37/sysfoo:latest
     ports:
       - 8888:8080
