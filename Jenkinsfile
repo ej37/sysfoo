@@ -28,6 +28,7 @@ pipeline {
     }
 
     stage('package') {
+      agent any
       steps {
         echo 'packaging'
         sh 'mvn package -DskipTests'
