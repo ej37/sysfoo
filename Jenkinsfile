@@ -19,8 +19,8 @@ pipeline {
       parallel {
         stage('package') {
           when {
-                branch 'main'
-            }
+            branch 'main'
+          }
           steps {
             echo 'packaging'
             sh 'mvn package -DskipTests'
@@ -30,8 +30,8 @@ pipeline {
         stage('Docker B&P') {
           agent any
           when {
-                branch 'main'
-            }
+            branch 'main'
+          }
           steps {
             script {
               docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin')
@@ -45,6 +45,15 @@ pipeline {
             }
 
           }
+        }
+
+      }
+    }
+
+    stage('Deploy to dev env') {
+      steps {
+        script {
+          docker compose up -d
         }
 
       }
