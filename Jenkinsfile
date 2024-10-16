@@ -18,6 +18,9 @@ pipeline {
     stage('package') {
       parallel {
         stage('package') {
+          when {
+                branch 'main'
+            }
           steps {
             echo 'packaging'
             sh 'mvn package -DskipTests'
@@ -26,6 +29,9 @@ pipeline {
 
         stage('Docker B&P') {
           agent any
+          when {
+                branch 'main'
+            }
           steps {
             script {
               docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin')
