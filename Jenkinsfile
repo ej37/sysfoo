@@ -55,10 +55,7 @@ pipeline {
             branch 'main'
           }
       steps {
-        script {
-          docker compose up -d
-        }
-
+        sh 'docker compose up -d'
       }
     }
 
